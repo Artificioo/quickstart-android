@@ -1,6 +1,7 @@
 package com.google.firebase.samples.apps.mlkit.java.facedetection;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -27,8 +28,10 @@ public class FaceContourDetectorProcessor extends VisionProcessorBase<List<Fireb
     private static final String TAG = "FaceContourDetectorProc";
 
     private final FirebaseVisionFaceDetector detector;
+    private final int mSelectedColor;
 
-    public FaceContourDetectorProcessor() {
+    public FaceContourDetectorProcessor(int selectedColor) {
+        mSelectedColor = selectedColor;
         FirebaseVisionFaceDetectorOptions options =
                 new FirebaseVisionFaceDetectorOptions.Builder()
                         .setPerformanceMode(FirebaseVisionFaceDetectorOptions.FAST)
@@ -65,7 +68,7 @@ public class FaceContourDetectorProcessor extends VisionProcessorBase<List<Fireb
         }
         for (int i = 0; i < faces.size(); ++i) {
             FirebaseVisionFace face = faces.get(i);
-            FaceContourGraphic faceGraphic = new FaceContourGraphic(graphicOverlay, face);
+            FaceContourGraphic faceGraphic = new FaceContourGraphic(graphicOverlay, face, mSelectedColor);
             graphicOverlay.add(faceGraphic);
         }
         graphicOverlay.postInvalidate();
